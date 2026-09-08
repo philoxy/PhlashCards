@@ -1,2 +1,2 @@
 # PhlashCards
-Flashcard program because why not
+Flashcard program made in Python with qt
