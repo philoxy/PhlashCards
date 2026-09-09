@@ -96,16 +96,12 @@ jobs:
 
         shell: bash
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v3
+      - name: Create Release
+        uses: ncipollo/release-action@v1.21.0
         with:
-          tag_name: ${{ github.event.inputs.version }}
+          tag: ${{ github.event.inputs.version }}
           name: PhlashCards ${{ github.event.inputs.version }}
           draft: true
           prerelease: false
-          files: |
-            ./phlashcards-win.zip
-            ./phlashcards-mac.zip
-            ./phlashcards-mac-intel.zip
-            ./phlashcards-linux.zip
+          artifacts: "./phlashcards-win.zip,./phlashcards-mac.zip,./phlashcards-mac-intel.zip,./phlashcards-linux.zip"
             
