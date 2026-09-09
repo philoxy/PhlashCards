@@ -47,9 +47,14 @@ jobs:
         shell: bash
 
       - name: Upload assets
-        run: |
-          mv assets dist/assets
-          mv sets dist/sets
+        uses: actions/upload-artifact@v7
+        with:
+          run: |
+            mkdir thingys
+            mv assets thingys/assets
+            mv sets thingys/sets
+          name: thingys
+          path: .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7
@@ -77,6 +82,8 @@ jobs:
       - name: Pack game files
         run: |
           mkdir phlashcards-win
+          mv thingys/assets assets
+          mv thingys/sets sets
 
           mv ./assets phlashcards-win/assets
           mv ./assets phlashcards-linux/assets
