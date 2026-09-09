@@ -46,6 +46,11 @@ jobs:
           fi
         shell: bash
 
+      - name: Upload assets
+        run: |
+          mv assets dist/assets
+          mv sets dist/sets
+
       - name: Upload artifact
         uses: actions/upload-artifact@v7
         with:
@@ -73,12 +78,15 @@ jobs:
         run: |
           mkdir phlashcards-win
 
-          mv main/_internal/assets phlashcards-win/assets
-          mv phlashcards-linux/_internal/assets phlashcards-linux/assets
-          mv phlashcards-mac/_internal/assets phlashcards-mac/assets
-          mv phlashcards-mac-intel/_internal/assets phlashcards-mac-intel/assets
-          
-          mv main/_internal phlashcards-win/_internal
+          mv assets phlashcards-win/assets
+          mv assets phlashcards-linux/assets
+          mv assets phlashcards-mac/assets
+          mv assets phlashcards-mac-intel/assets
+
+          mv sets phlashcards-win/sets
+          mv sets phlashcards-linux/sets
+          mv sets phlashcards-mac/sets
+          mv sets phlashcards-mac-intel/sets
 
           mv phlashcards-win.exe phlashcards-win/phlashcards-win.exe
           mv phlashcards-linux/main phlashcards-linux/phlashcards-linux
