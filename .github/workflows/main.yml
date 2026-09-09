@@ -28,7 +28,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build executable
-        run: pyinstaller --one-file main.py flashcards.py home.py importSets.py mainWindow.py --add-data assets:assets
+        run: pyinstaller --onefile main.py flashcards.py home.py importSets.py mainWindow.py --add-data assets:assets
 
       - name: List files
         run: ls -R
