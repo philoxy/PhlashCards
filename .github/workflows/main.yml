@@ -1,0 +1,115 @@
+name: Build and Release Binaries
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Enter the version (e.g., v1.0.0)"
+        required: true
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-15, macos-15-intel]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Build executable
+        run: pyinstaller main.py flashcards.py home.py importSets.py mainWindow.py
+
+      - name: List files
+        run: ls -R
+
+      - name: Rename executable
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            mv dist/main/main.exe dist/phlashcards-win.exe
+          elif [[ "$RUNNER_OS" == "Linux" ]]; then
+            mv dist/main dist/phlashcards-linux
+          elif [[ "${{ matrix.os }}" == "macos-15" ]]; then
+            mv dist/main dist/phlashcards-mac
+          elif [[ "${{ matrix.os }}" == "macos-15-intel" ]]; then
+            mv dist/main dist/phlashcards-mac-intel
+          fi
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: phlashcards-${{ matrix.os }}
+          path: dist/*
+
+
+  release:
+    if: ${{ always() }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v8
+        with:
+          merge-multiple: true
+          path: .
+
+      - name: List downloaded files (Debugging)
+        run: ls -R
+
+      - name: Pack game files
+        run: |
+          mkdir phlashcards-win
+
+          mv main/_internal/assets phlashcards-win/assets
+          mv phlashcards-linux/_internal/assets phlashcards-linux/assets
+          mv phlashcards-mac/_internal/assets phlashcards-mac/assets
+          mv phlashcards-mac-intel/_internal/assets phlashcards-mac-intel/assets
+
+          mv main/_internal/levels phlashcards-win/levels
+          mv phlashcards-linux/_internal/levels phlashcards-linux/levels
+          mv phlashcards-mac/_internal/levels phlashcards-mac/levels
+          mv phlashcards-mac-intel/_internal/levels phlashcards-mac-intel/levels
+
+          mv main/_internal phlashcards-win/_internal
+
+          mv phlashcards-win.exe phlashcards-win/phlashcards-win.exe
+          mv phlashcards-linux/main phlashcards-linux/phlashcards-linux
+          mv phlashcards-mac/main phlashcards-mac/phlashcards-mac
+          mv phlashcards-mac-intel/main phlashcards-mac-intel/phlashcards-mac-intel
+
+          chmod +x phlashcards-mac/phlashcards-mac || true
+          chmod +x phlashcards-mac-intel/phlashcards-mac-intel || true
+          chmod +x phlashcards-linux/phlashcards-linux || true
+
+          zip -r phlashcards-win.zip phlashcards-win/
+          zip -r phlashcards-linux.zip phlashcards-linux/
+          zip -r phlashcards-mac.zip phlashcards-mac/
+          zip -r phlashcards-mac-intel.zip phlashcards-mac-intel/
+
+        shell: bash
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: PhlashCards ${{ github.event.inputs.version }}
+          draft: true
+          prerelease: false
+          files: |
+            ./phlashcards-win.zip
+            ./phlashcards-mac.zip
+            ./phlashcards-mac-intel.zip
+            ./phlashcards-linux.zip
+            
