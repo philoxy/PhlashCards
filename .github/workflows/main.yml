@@ -28,7 +28,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build executable
-        run: pyinstaller --onefile main.py flashcards.py home.py importSets.py mainWindow.py --add-data assets:assets
+        run: pyinstaller main.py flashcards.py home.py importSets.py mainWindow.py --add-data assets:assets --add-data sets:sets
 
       - name: List files
         run: ls -R
@@ -36,7 +36,7 @@ jobs:
       - name: Rename executable
         run: |
           if [[ "$RUNNER_OS" == "Windows" ]]; then
-            mv dist/main.exe dist/phlashcards-win.exe
+            mv dist/main/main.exe dist/phlashcards-win.exe
           elif [[ "$RUNNER_OS" == "Linux" ]]; then
             mv dist/main dist/phlashcards-linux
           elif [[ "${{ matrix.os }}" == "macos-15" ]]; then
@@ -45,18 +45,6 @@ jobs:
             mv dist/main dist/phlashcards-mac-intel
           fi
         shell: bash
-
-      - name: Move assets
-        run: |
-          mkdir thingys
-          mv assets thingys/assets
-          mv sets thingys/sets
-
-      - name: Upload assets
-        uses: actions/upload-artifact@v7
-        with:
-          name: thingys
-          path: .
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7
@@ -69,7 +57,6 @@ jobs:
     if: ${{ always() }}
     needs: build
     runs-on: ubuntu-latest
-    permissions: write-all
     steps:
 
       - name: Download all build artifacts
@@ -84,18 +71,18 @@ jobs:
       - name: Pack game files
         run: |
           mkdir phlashcards-win
-          mv thingys/assets assets
-          mv thingys/sets sets
 
-          mv ./assets phlashcards-win/assets
-          mv ./assets phlashcards-linux/assets
-          mv ./assets phlashcards-mac/assets
-          mv ./assets phlashcards-mac-intel/assets
+          mv main/_internal/assets phlashcards-win/assets
+          mv phlashcards-linux/_internal/assets phlashcards-linux/assets
+          mv phlashcards-mac/_internal/assets phlashcards-mac/assets
+          mv phlashcards-mac-intel/_internal/assets phlashcards-mac-intel/assets
 
-          mv ./sets phlashcards-win/sets
-          mv ./sets phlashcards-linux/sets
-          mv ./sets phlashcards-mac/sets
-          mv ./sets phlashcards-mac-intel/sets
+          mv main/_internal/levels phlashcards-win/levels
+          mv phlashcards-linux/_internal/levels phlashcards-linux/levels
+          mv phlashcards-mac/_internal/levels phlashcards-mac/levels
+          mv phlashcards-mac-intel/_internal/levels phlashcards-mac-intel/levels
+
+          mv main/_internal phlashcards-win/_internal
 
           mv phlashcards-win.exe phlashcards-win/phlashcards-win.exe
           mv phlashcards-linux/main phlashcards-linux/phlashcards-linux
@@ -113,12 +100,12 @@ jobs:
 
         shell: bash
 
-      - name: Create Release
+      - name: Create GitHub Release
         uses: ncipollo/release-action@v1.21.0
         with:
-          tag: ${{ github.event.inputs.version }}
-          name: PhlashCards ${{ github.event.inputs.version }}
+          tag: v1.0.0
+          name: PhlashCards v1.0.0
           draft: true
           prerelease: false
-          artifacts: "./phlashcards-win.zip,./phlashcards-mac.zip,./phlashcards-mac-intel.zip,./phlashcards-linux.zip"
+          artifacts: ./phlashcards-win.zip,./phlashcards-mac.zip,./phlashcards-mac-intel.zip,./phlashcards-linux.zip
             
