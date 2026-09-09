@@ -78,15 +78,15 @@ jobs:
         run: |
           mkdir phlashcards-win
 
-          mv assets phlashcards-win/assets
-          mv assets phlashcards-linux/assets
-          mv assets phlashcards-mac/assets
-          mv assets phlashcards-mac-intel/assets
+          mv ./assets phlashcards-win/assets
+          mv ./assets phlashcards-linux/assets
+          mv ./assets phlashcards-mac/assets
+          mv ./assets phlashcards-mac-intel/assets
 
-          mv sets phlashcards-win/sets
-          mv sets phlashcards-linux/sets
-          mv sets phlashcards-mac/sets
-          mv sets phlashcards-mac-intel/sets
+          mv ./sets phlashcards-win/sets
+          mv ./sets phlashcards-linux/sets
+          mv ./sets phlashcards-mac/sets
+          mv ./sets phlashcards-mac-intel/sets
 
           mv phlashcards-win.exe phlashcards-win/phlashcards-win.exe
           mv phlashcards-linux/main phlashcards-linux/phlashcards-linux
