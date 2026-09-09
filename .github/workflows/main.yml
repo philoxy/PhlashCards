@@ -28,7 +28,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build executable
-        run: pyinstaller main.py flashcards.py home.py importSets.py mainWindow.py
+        run: pyinstaller main.py flashcards.py home.py importSets.py mainWindow.py- --add-data assets:assets
 
       - name: List files
         run: ls -R
@@ -76,12 +76,7 @@ jobs:
           mv phlashcards-linux/_internal/assets phlashcards-linux/assets
           mv phlashcards-mac/_internal/assets phlashcards-mac/assets
           mv phlashcards-mac-intel/_internal/assets phlashcards-mac-intel/assets
-
-          mv main/_internal/levels phlashcards-win/levels
-          mv phlashcards-linux/_internal/levels phlashcards-linux/levels
-          mv phlashcards-mac/_internal/levels phlashcards-mac/levels
-          mv phlashcards-mac-intel/_internal/levels phlashcards-mac-intel/levels
-
+          
           mv main/_internal phlashcards-win/_internal
 
           mv phlashcards-win.exe phlashcards-win/phlashcards-win.exe
