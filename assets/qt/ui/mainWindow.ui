@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../img/icon.png</normaloff>../img/icon.png</iconset>
+    <normaloff>../../../../phlashcards/assets/qt/img/icon.png</normaloff>../../../../phlashcards/assets/qt/img/icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -50,11 +50,15 @@
 	background-color: qlineargradient(spread:pad, x1:0.46591, y1:0.634, x2:0.804, y2:0.0241245, stop:0 rgba(21, 85, 222, 255), stop:1 rgba(5, 162, 228, 255));
 }
 
-QPushButton, QComboBox, QCombBox::drop-down, QListView, QComboBox	 {
+QPushButton, QComboBox, QComboBox::drop-down, QListView, QCombBox:on {
 	border: 1px solid rgb(38,103,255);
 	border-radius: 7px;
 	color: rgb(0,0,0);
 	background-color: qlineargradient(spread:pad, x1:1, y1:0.503, x2:1, y2:0, stop:0 rgba(75, 132, 255, 255), stop:1 rgba(94, 207, 255, 255));
+}
+
+QListView::item:hover {
+
 }
 
 QComboBox:on {
@@ -64,7 +68,7 @@ QComboBox:on {
 	border-bottom-right-radius: 0px;
 }
 
-QComboBox {
+QComboBox::drop-down, QComboBox::item:pressed {
 	padding-left: 20px;
 }
 
@@ -72,11 +76,11 @@ QPushButton:pressed, QComboBox:pressed {
 	background-color: qlineargradient(spread:pad, x1:1, y1:0.503, x2:1, y2:0, stop:0 rgba(24, 97, 255, 255), stop:1 rgba(6, 181, 255, 255));
 }
 
-QPushButton:disabled {
+QPushButton:disabled, QComboBox:disabled {
 	background-color: rgb(13, 54, 142);
 }
 
-QPushButton:hover:!pressed, QComboBox:hover:!pressed {
+QPushButton:hover:!pressed, QComboBox:hover:!pressed, QListView:hover {
 	background-color: qlineargradient(spread:pad, x1:1, y1:0.503, x2:1, y2:0, stop:0 rgba(103, 151, 255, 255), stop:1 rgba(146, 223, 255, 255));
 }
 

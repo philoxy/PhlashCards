@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(643, 480)
         icon = QIcon()
-        icon.addFile(u"../img/icon.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"../../../../phlashcards/assets/qt/img/icon.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"")
         self.centralwidget = QWidget(MainWindow)
@@ -44,11 +44,15 @@ class Ui_MainWindow(object):
 "	background-color: qlineargradient(spread:pad, x1:0.46591, y1:0.634, x2:0.804, y2:0.0241245, stop:0 rgba(21, 85, 222, 255), stop:1 rgba(5, 162, 228, 255));\n"
 "}\n"
 "\n"
-"QPushButton, QComboBox, QCombBox::drop-down, QListView, QComboBox	 {\n"
+"QPushButton, QComboBox, QComboBox::drop-down, QListView, QCombBox:on {\n"
 "	border: 1px solid rgb(38,103,255);\n"
 "	border-radius: 7px;\n"
 "	color: rgb(0,0,0);\n"
 "	background-color: qlineargradient(spread:pad, x1:1, y1:0.503, x2:1, y2:0, stop:0 rgba(75, 132, 255, 255), stop:1 rgba(94, 207, 255, 255));\n"
+"}\n"
+"\n"
+"QListView::item:hover {\n"
+"\n"
 "}\n"
 "\n"
 "QComboBox:on {\n"
@@ -58,7 +62,7 @@ class Ui_MainWindow(object):
 "	border-bottom-right-radius: 0px;\n"
 "}\n"
 "\n"
-"QComboBox {\n"
+"QComboBox::drop-down, QComboBox::item:pressed {\n"
 "	padding-left: 20px;\n"
 "}\n"
 "\n"
@@ -66,12 +70,12 @@ class Ui_MainWindow(object):
 "	background-color: qlineargradient(spread:pad, x1:1, y1:0.503, x2:1, y2:0, stop:0 rgba(24, 97, 255, 255), stop:1 rgba(6, 181, 255, 255));\n"
 "}\n"
 "\n"
-"QPushButton:disabled {\n"
+"QPushButto"
+                        "n:disabled, QComboBox:disabled {\n"
 "	background-color: rgb(13, 54, 142);\n"
 "}\n"
 "\n"
-"QPushButton:h"
-                        "over:!pressed, QComboBox:hover:!pressed {\n"
+"QPushButton:hover:!pressed, QComboBox:hover:!pressed, QListView:hover {\n"
 "	background-color: qlineargradient(spread:pad, x1:1, y1:0.503, x2:1, y2:0, stop:0 rgba(103, 151, 255, 255), stop:1 rgba(146, 223, 255, 255));\n"
 "}\n"
 "\n"

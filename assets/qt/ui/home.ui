@@ -48,17 +48,12 @@
   <widget class="QComboBox" name="dropdown_type">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>310</y>
-     <width>161</width>
+     <x>250</x>
+     <y>240</y>
+     <width>141</width>
      <height>25</height>
     </rect>
    </property>
-   <item>
-    <property name="text">
-     <string>Select Quiz Type...</string>
-    </property>
-   </item>
    <item>
     <property name="text">
      <string>Flashcards</string>
@@ -78,9 +73,9 @@
   <widget class="QPushButton" name="button_start">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>270</y>
-     <width>161</width>
+     <x>250</x>
+     <y>150</y>
+     <width>141</width>
      <height>25</height>
     </rect>
    </property>
@@ -97,9 +92,9 @@
   <widget class="QPushButton" name="button_import">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>350</y>
-     <width>161</width>
+     <x>250</x>
+     <y>180</y>
+     <width>141</width>
      <height>25</height>
     </rect>
    </property>
@@ -120,7 +115,7 @@
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>380</y>
+     <y>410</y>
      <width>161</width>
      <height>16</height>
     </rect>
@@ -136,6 +131,85 @@
    </property>
    <property name="alignment">
     <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="dropdown_shuffle">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>290</y>
+     <width>141</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>In order</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Shuffle</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="dropdown_reverse">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>340</y>
+     <width>141</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Normal</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Reversed</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_type">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>220</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Quiz Type</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_shuffle">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>270</y>
+     <width>141</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Question Order</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_reverse">
+   <property name="geometry">
+    <rect>
+     <x>250</x>
+     <y>320</y>
+     <width>151</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Flipped Question/Answer</string>
    </property>
   </widget>
  </widget>

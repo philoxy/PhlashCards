@@ -1,4 +1,4 @@
-import sys, os, json
+import sys, os, json, random
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 from PySide6.QtCore import *
@@ -13,6 +13,9 @@ app = QApplication(sys.argv)
 
 currSet = None
 quizType = 0
+questions = []
+currQuestion = 0
+reverseQuestion = False
 
 def getSets():
     setList = [[], [], []]
@@ -42,12 +45,62 @@ class mainWindow(QMainWindow):
         self.ui.sw.addWidget(flashcards)
         self.ui.sw.setCurrentIndex(0)
         self.setFixedSize(640, 480)
+        self.setWindowTitle("PhlashCards")
 
 class flashcardsWindow(QDialog):
     def __init__(self):
         super(flashcardsWindow, self).__init__()
         self.ui = Ui_flashcards()
         self.ui.setupUi(self)
+        self.ui.button_flip.clicked.connect(self.revealAnswer)
+        self.ui.button_know3.setHidden(True)
+        self.ui.button_know0.setHidden(True)
+        self.ui.button_know3.clicked.connect(self.correct)
+        self.ui.button_know0.clicked.connect(self.again)
+        self.setWindowTitle("PhlashCards - Studying")
+
+    def loadQuestion(self):
+        global questions, currQuestion, reverseQuestion, questions
+        self.ui.button_know3.setHidden(True)
+        self.ui.button_know0.setHidden(True)
+        if currQuestion+1 > len(questions):
+            currQuestion = 0
+        if len(questions) > 0:
+
+            questionNumber = 0
+            if reverseQuestion:
+                questionNumber = 1
+
+            self.ui.label_question.setText(f'{questions[currQuestion][questionNumber]}')
+            self.ui.label_answer.setText("")
+        else:
+            window.ui.sw.setCurrentIndex(0)
+
+    def revealAnswer(self):
+        global reverseQuestion, questions, currQuestion
+
+        questionNumber = 1
+        if reverseQuestion:
+            questionNumber = 0
+
+        self.ui.label_answer.setText(f'Answer:\n{questions[currQuestion][questionNumber]}')
+        self.ui.button_know3.setHidden(False)
+        self.ui.button_know0.setHidden(False)
+
+    def again(self):
+        global currQuestion, shuffle, questions, reverseQuestion
+        if not shuffle:
+            currQuestion += 1
+        else:
+            currQuestion = random.randint(0, len(questions)-1)
+        self.loadQuestion()
+
+    def correct(self):
+        global currQuestion, reverseQuestion
+        if shuffle:
+            currQuestion = random.randint(0, len(questions)-1)
+        questions.remove(questions[currQuestion])
+        self.loadQuestion()
 
 class homeWindow(QDialog):
     def __init__(self):
@@ -59,12 +112,25 @@ class homeWindow(QDialog):
         self.ui.button_start.clicked.connect(self.start)
         self.ui.button_import.clicked.connect(self.goto_importSets)
         self.ui.dropdown_type.currentIndexChanged.connect(self.selectQuizType)
+        self.ui.dropdown_shuffle.currentIndexChanged.connect(self.shuffle)
+        self.ui.dropdown_reverse.currentIndexChanged.connect(self.reverse)
         self.ui.label_selectset.setHidden(False)
+        self.setWindowTitle("PhlashCards - Home")
 
     def start(self):
-        global currSet, quizType
+        global currSet, quizType, questions, currQuestion
         quizType = self.ui.dropdown_type.currentIndex()
-        window.ui.sw.setCurrentIndex(quizType+1)
+        if quizType == 0:
+            if shuffle:
+                currQuestion = random.randint(0, len(questions)-1)
+            window.ui.sw.setCurrentIndex(2)
+        questions.clear()
+        with open(f'sets/{currSet}/info.json', 'r') as currentSet:
+            tempQuestions = json.load(currentSet)["questions"]
+            for question in tempQuestions:
+                questions.append(tempQuestions[question])
+
+        flashcards.loadQuestion()
 
     def goto_importSets(self):
         window.ui.sw.setCurrentIndex(1)
@@ -73,15 +139,24 @@ class homeWindow(QDialog):
         global currSet
         self.ui.button_start.setEnabled(False)
         home.ui.label_selectset.setHidden(False)
-        home.ui.label_selectset.setText("Please select a quiz type.")
-        if self.ui.dropdown_type.currentIndex() != 0:
-            home.ui.label_selectset.setHidden(True)
-            if currSet != None:
-                self.ui.button_start.setEnabled(True)
-            else:
-                home.ui.label_selectset.setHidden(False)
-                home.ui.label_selectset.setText("Please select a set.")
+        home.ui.label_selectset.setHidden(True)
+        if currSet != None:
+            self.ui.button_start.setEnabled(True)
+        else:
+            home.ui.label_selectset.setHidden(False)
+            home.ui.label_selectset.setText("Please select a set.")
 
+        self.ui.dropdown_reverse.setEnabled(True)
+        if self.ui.dropdown_type.currentIndex() != 0:
+            self.ui.dropdown_reverse.setEnabled(False)
+
+    def shuffle(self):
+        global shuffle
+        shuffle = bool(self.ui.dropdown_shuffle.currentIndex())
+
+    def reverse(self):
+        global reverseQuestion
+        reverseQuestion = bool(self.ui.dropdown_reverse.currentIndex())
 
 
 class importWindow(QDialog):
@@ -128,6 +203,8 @@ class importWindow(QDialog):
     def goto_home(self):
         global currSet
         window.ui.sw.setCurrentIndex(0)
+        home.selectQuizType()
+        """
         if home.ui.dropdown_type.currentIndex() != 0 and currSet != None:
             home.ui.label_selectset.setHidden(True)
         if currSet == None:
@@ -139,6 +216,7 @@ class importWindow(QDialog):
         if home.ui.dropdown_type.currentIndex() == 0:
             home.ui.label_selectset.setHidden(False)
             home.ui.label_selectset.setText("Please select a quiz type.")
+        """
 
 home = homeWindow()
 importSets = importWindow()
