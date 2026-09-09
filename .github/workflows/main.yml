@@ -77,10 +77,10 @@ jobs:
           mv phlashcards-mac/_internal/assets phlashcards-mac/assets
           mv phlashcards-mac-intel/_internal/assets phlashcards-mac-intel/assets
 
-          mv main/_internal/levels phlashcards-win/levels
-          mv phlashcards-linux/_internal/levels phlashcards-linux/levels
-          mv phlashcards-mac/_internal/levels phlashcards-mac/levels
-          mv phlashcards-mac-intel/_internal/levels phlashcards-mac-intel/levels
+          mv main/_internal/sets phlashcards-win/sets
+          mv phlashcards-linux/_internal/sets phlashcards-linux/sets
+          mv phlashcards-mac/_internal/sets phlashcards-mac/sets
+          mv phlashcards-mac-intel/_internal/sets phlashcards-mac-intel/sets
 
           mv main/_internal phlashcards-win/_internal
 
