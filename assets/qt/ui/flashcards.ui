@@ -16,9 +16,9 @@
   <widget class="QPushButton" name="button_know0">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>421</y>
-     <width>91</width>
+     <x>210</x>
+     <y>370</y>
+     <width>101</width>
      <height>34</height>
     </rect>
    </property>
@@ -29,9 +29,9 @@
   <widget class="QPushButton" name="button_flip">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>340</y>
-     <width>121</width>
+     <x>210</x>
+     <y>410</y>
+     <width>221</width>
      <height>34</height>
     </rect>
    </property>
@@ -42,9 +42,9 @@
   <widget class="QPushButton" name="button_know3">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>421</y>
-     <width>91</width>
+     <x>330</x>
+     <y>370</y>
+     <width>101</width>
      <height>34</height>
     </rect>
    </property>
@@ -92,6 +92,54 @@
    </property>
    <property name="alignment">
     <set>Qt::AlignmentFlag::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="button_home">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>131</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Ubuntu Sans</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Back</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_stats">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>450</y>
+     <width>301</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>0 Not guessed, 0 Guessed, 0 Remaining</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_acc">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>450</y>
+     <width>301</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Accuracy: 0%</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
    </property>
   </widget>
  </widget>

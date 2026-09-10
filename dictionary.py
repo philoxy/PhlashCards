@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'importSets.ui'
+## Form generated from reading UI file 'dictionary.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.11.2
 ##
@@ -19,20 +19,20 @@ from PySide6.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QApplicat
     QFrame, QHeaderView, QLabel, QPushButton,
     QSizePolicy, QTableWidget, QTableWidgetItem, QWidget)
 
-class Ui_importSets(object):
-    def setupUi(self, importSets):
-        if not importSets.objectName():
-            importSets.setObjectName(u"importSets")
-        importSets.resize(640, 480)
+class Ui_dictionary(object):
+    def setupUi(self, dictionary):
+        if not dictionary.objectName():
+            dictionary.setObjectName(u"dictionary")
+        dictionary.resize(640, 480)
         font = QFont()
         font.setFamilies([u"Ubuntu Sans"])
         font.setPointSize(10)
-        importSets.setFont(font)
-        self.button_refresh = QPushButton(importSets)
-        self.button_refresh.setObjectName(u"button_refresh")
-        self.button_refresh.setGeometry(QRect(250, 10, 141, 34))
-        self.button_refresh.setFont(font)
-        self.table = QTableWidget(importSets)
+        dictionary.setFont(font)
+        self.button_edit = QPushButton(dictionary)
+        self.button_edit.setObjectName(u"button_edit")
+        self.button_edit.setGeometry(QRect(250, 440, 141, 34))
+        self.button_edit.setFont(font)
+        self.table = QTableWidget(dictionary)
         if (self.table.columnCount() < 2):
             self.table.setColumnCount(2)
         __qtablewidgetitem = QTableWidgetItem()
@@ -40,7 +40,7 @@ class Ui_importSets(object):
         __qtablewidgetitem1 = QTableWidgetItem()
         self.table.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         self.table.setObjectName(u"table")
-        self.table.setGeometry(QRect(10, 50, 621, 381))
+        self.table.setGeometry(QRect(10, 50, 621, 341))
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -71,46 +71,53 @@ class Ui_importSets(object):
         self.table.verticalHeader().setHighlightSections(True)
         self.table.verticalHeader().setProperty(u"showSortIndicator", False)
         self.table.verticalHeader().setStretchLastSection(False)
-        self.button_home = QPushButton(importSets)
+        self.button_home = QPushButton(dictionary)
         self.button_home.setObjectName(u"button_home")
         self.button_home.setGeometry(QRect(10, 10, 131, 34))
         self.button_home.setFont(font)
-        self.label_currset = QLabel(importSets)
+        self.label_currset = QLabel(dictionary)
         self.label_currset.setObjectName(u"label_currset")
-        self.label_currset.setGeometry(QRect(10, 446, 471, 21))
+        self.label_currset.setGeometry(QRect(150, 10, 481, 31))
         self.label_currset.setFont(font)
-        self.button_import = QPushButton(importSets)
-        self.button_import.setObjectName(u"button_import")
-        self.button_import.setGeometry(QRect(490, 10, 141, 34))
-        self.button_import.setFont(font)
-        self.button_import.setAutoDefault(True)
-        self.button_import.setFlat(False)
-        self.button_dict = QPushButton(importSets)
-        self.button_dict.setObjectName(u"button_dict")
-        self.button_dict.setGeometry(QRect(490, 440, 141, 34))
-        self.button_dict.setFont(font)
-        self.button_dict.setAutoDefault(True)
-        self.button_dict.setFlat(False)
+        self.button_remove = QPushButton(dictionary)
+        self.button_remove.setObjectName(u"button_remove")
+        self.button_remove.setGeometry(QRect(490, 440, 141, 34))
+        self.button_remove.setFont(font)
+        self.button_remove.setAutoDefault(True)
+        self.button_remove.setFlat(False)
+        self.button_add = QPushButton(dictionary)
+        self.button_add.setObjectName(u"button_add")
+        self.button_add.setGeometry(QRect(10, 440, 141, 34))
+        self.button_add.setFont(font)
+        self.button_hideq = QPushButton(dictionary)
+        self.button_hideq.setObjectName(u"button_hideq")
+        self.button_hideq.setGeometry(QRect(130, 400, 141, 34))
+        self.button_hideq.setFont(font)
+        self.button_hidea = QPushButton(dictionary)
+        self.button_hidea.setObjectName(u"button_hidea")
+        self.button_hidea.setGeometry(QRect(370, 400, 141, 34))
+        self.button_hidea.setFont(font)
 
-        self.retranslateUi(importSets)
+        self.retranslateUi(dictionary)
 
-        self.button_import.setDefault(False)
-        self.button_dict.setDefault(False)
+        self.button_remove.setDefault(False)
 
 
-        QMetaObject.connectSlotsByName(importSets)
+        QMetaObject.connectSlotsByName(dictionary)
     # setupUi
 
-    def retranslateUi(self, importSets):
-        importSets.setWindowTitle(QCoreApplication.translate("importSets", u"Dialog", None))
-        self.button_refresh.setText(QCoreApplication.translate("importSets", u"Refresh", None))
+    def retranslateUi(self, dictionary):
+        dictionary.setWindowTitle(QCoreApplication.translate("dictionary", u"Dialog", None))
+        self.button_edit.setText(QCoreApplication.translate("dictionary", u"Edit", None))
         ___qtablewidgetitem = self.table.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("importSets", u"Name", None))
+        ___qtablewidgetitem.setText(QCoreApplication.translate("dictionary", u"Question", None))
         ___qtablewidgetitem1 = self.table.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("importSets", u"Description", None))
-        self.button_home.setText(QCoreApplication.translate("importSets", u"Home", None))
-        self.label_currset.setText(QCoreApplication.translate("importSets", u"Current Set: None", None))
-        self.button_import.setText(QCoreApplication.translate("importSets", u"Import", None))
-        self.button_dict.setText(QCoreApplication.translate("importSets", u"Dictionary", None))
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("dictionary", u"Answer", None))
+        self.button_home.setText(QCoreApplication.translate("dictionary", u"Back", None))
+        self.label_currset.setText(QCoreApplication.translate("dictionary", u"Current Set: None", None))
+        self.button_remove.setText(QCoreApplication.translate("dictionary", u"Remove", None))
+        self.button_add.setText(QCoreApplication.translate("dictionary", u"Add", None))
+        self.button_hideq.setText(QCoreApplication.translate("dictionary", u"Hide Questions", None))
+        self.button_hidea.setText(QCoreApplication.translate("dictionary", u"Hide Answers", None))
     # retranslateUi
 
