@@ -9,6 +9,7 @@ from importSets import Ui_importSets
 from home import Ui_home
 from flashcards import Ui_flashcards
 from dictionary import Ui_dictionary
+from wordEdit import Ui_wordEdit
 
 app = QApplication(sys.argv)
 
@@ -56,6 +57,53 @@ def goto_dict():
     window.ui.sw.setCurrentIndex(3)
     dictWin.refresh()
 
+def goto_edit():
+    global editMode
+    if editMode == "add":
+        edit.ui.label_editmode.setText("Adding word")
+    else:
+        edit.ui.label_editmode.setText("Editing word")
+    edit.setWordText()
+    window.ui.sw.setCurrentIndex(4)
+
+class editWindow(QDialog):
+    def __init__(self):
+        super(editWindow, self).__init__()
+        self.ui = Ui_wordEdit()
+        self.ui.setupUi(self)
+        self.ui.button_back.clicked.connect(goto_dict)
+        self.ui.button_ok.clicked.connect(self.edit)
+
+    def setWordText(self):
+        global currWord, editMode, questions
+        if editMode == "edit":
+            self.ui.line_q.setText(questions[currWord][0])
+            self.ui.line_a.setText(questions[currWord][1])
+        else:
+            self.ui.line_q.setText("")
+            self.ui.line_a.setText("")
+
+    def edit(self):
+        global currSet, questions, editMode
+        with open(f'sets/{currSet}/info.json', 'r') as currentSet:
+            currentSet2 = json.load(currentSet)
+            if editMode == "edit":
+                currentSet2["questions"][str(currWord)] = [self.ui.line_q.text(), self.ui.line_a.text()]
+                dictWin.ui.table.selectRow(currWord)
+            else:
+                currentSet2["questions"][len(currentSet2["questions"])] = [self.ui.line_q.text(), self.ui.line_a.text()]
+                dictWin.ui.table.selectRow(len(questions))
+        with open(f'sets/{currSet}/info.json', 'w') as currentSet:
+            json.dump(currentSet2, currentSet)
+        questions.clear()
+        with open(f'sets/{currSet}/info.json', 'r') as currentSet:
+            tempQuestions = json.load(currentSet)["questions"]
+            for question in tempQuestions:
+                questions.append(tempQuestions[question])
+        practicing = False
+        goto_dict()
+
+
 class mainWindow(QMainWindow):
     def __init__(self):
         super(mainWindow, self).__init__()
@@ -65,6 +113,7 @@ class mainWindow(QMainWindow):
         self.ui.sw.addWidget(importSets)
         self.ui.sw.addWidget(flashcards)
         self.ui.sw.addWidget(dictWin)
+        self.ui.sw.addWidget(edit)
         self.ui.sw.setCurrentIndex(0)
         self.setFixedSize(640, 480)
         self.setWindowTitle("PhlashCards")
@@ -142,8 +191,8 @@ class homeWindow(QDialog):
         self.ui.button_start.clicked.connect(self.start)
         self.ui.button_import.clicked.connect(goto_importSets)
         self.ui.dropdown_type.currentIndexChanged.connect(self.selectQuizType)
-        self.ui.dropdown_shuffle.currentIndexChanged.connect(self.shuffle)
-        self.ui.dropdown_reverse.currentIndexChanged.connect(self.reverse)
+        self.ui.check_shuffle.checkStateChanged.connect(self.shuffle)
+        self.ui.check_flip.checkStateChanged.connect(self.reverse)
         self.ui.label_selectset.setHidden(False)
         self.setWindowTitle("PhlashCards - Home")
 
@@ -169,17 +218,17 @@ class homeWindow(QDialog):
             home.ui.label_selectset.setHidden(False)
             home.ui.label_selectset.setText("Please select a set.")
 
-        self.ui.dropdown_reverse.setEnabled(True)
+        self.ui.check_flip.setEnabled(True)
         if self.ui.dropdown_type.currentIndex() != 0:
-            self.ui.dropdown_reverse.setEnabled(False)
+            self.ui.check_flip.setEnabled(False)
 
     def shuffle(self):
         global shuffle
-        shuffle = bool(self.ui.dropdown_shuffle.currentIndex())
+        shuffle = self.ui.check_shuffle.isChecked()
 
     def reverse(self):
         global reverseQuestion
-        reverseQuestion = bool(self.ui.dropdown_reverse.currentIndex())
+        reverseQuestion = not self.ui.check_shuffle.isChecked()
 
 
 class importWindow(QDialog):
@@ -249,7 +298,11 @@ class dictWindow(QDialog):
         self.ui.button_home.clicked.connect(goto_importSets)
         self.ui.button_hideq.clicked.connect(self.toggleQ)
         self.ui.button_hidea.clicked.connect(self.toggleA)
+        self.ui.button_remove.clicked.connect(self.removeWord)
+        self.ui.button_add.clicked.connect(self.addWord)
+        self.ui.button_edit.clicked.connect(self.editWord)
         self.ui.button_edit.setEnabled(False)
+        self.ui.button_remove.setEnabled(False)
 
         for i in range(1):
             self.ui.table.setColumnWidth(i, self.ui.table.width()/2)
@@ -271,6 +324,25 @@ class dictWindow(QDialog):
         else:
             self.qhide = True
             self.ui.button_hideq.setText("Show questions")
+        self.refresh()
+
+    def addWord(self):
+        global editMode
+        editMode = "add"
+        goto_edit()
+
+    def editWord(self):
+        global editMode
+        editMode = "edit"
+        goto_edit()
+
+    def removeWord(self):
+        global currSet, currWord
+        with open(f'sets/{currSet}/info.json', 'r') as currentSet:
+            currentSet2 = json.load(currentSet)
+            del currentSet2["questions"][str(currWord)]
+        with open(f'sets/{currSet}/info.json', 'w') as currentSet:
+            json.dump(currentSet2, currentSet)
         self.refresh()
 
     def refresh(self):
@@ -304,16 +376,21 @@ class dictWindow(QDialog):
     def selectListItem(self):
         global currWord
         selectedSet = self.ui.table.selectionModel()
+        self.ui.button_remove.setEnabled(False)
+        self.ui.button_edit.setEnabled(False)
         if selectedSet.hasSelection():
             current_index = selectedSet.currentIndex()
             row = current_index.row()
             currWord = row
             self.ui.button_edit.setEnabled(True)
+            self.ui.button_remove.setEnabled(True)
+
 
 home = homeWindow()
 importSets = importWindow()
 flashcards = flashcardsWindow()
 dictWin = dictWindow()
+edit = editWindow()
 window = mainWindow()
 
 window.show()

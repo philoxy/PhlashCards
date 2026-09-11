@@ -115,7 +115,7 @@
    <property name="geometry">
     <rect>
      <x>240</x>
-     <y>410</y>
+     <y>430</y>
      <width>161</width>
      <height>16</height>
     </rect>
@@ -133,46 +133,6 @@
     <set>Qt::AlignmentFlag::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QComboBox" name="dropdown_shuffle">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>290</y>
-     <width>141</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>In order</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Shuffle</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QComboBox" name="dropdown_reverse">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>340</y>
-     <width>141</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <item>
-    <property name="text">
-     <string>Normal</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Reversed</string>
-    </property>
-   </item>
-  </widget>
   <widget class="QLabel" name="label_type">
    <property name="geometry">
     <rect>
@@ -186,31 +146,44 @@
     <string>Quiz Type</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_shuffle">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>240</x>
      <y>270</y>
-     <width>141</width>
-     <height>20</height>
+     <width>161</width>
+     <height>81</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Question Order</string>
+   <property name="title">
+    <string>Quiz Settings</string>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_reverse">
-   <property name="geometry">
-    <rect>
-     <x>250</x>
-     <y>320</y>
-     <width>151</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Flipped Question/Answer</string>
-   </property>
+   <widget class="QCheckBox" name="check_shuffle">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>25</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Shuffle Card Order</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="check_flip">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>52</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Flipped Questions</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -15,8 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QLabel,
-    QPushButton, QSizePolicy, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDialog,
+    QGroupBox, QLabel, QPushButton, QSizePolicy,
+    QWidget)
 
 class Ui_home(object):
     def setupUi(self, home):
@@ -54,28 +55,21 @@ class Ui_home(object):
         self.label_selectset = QLabel(home)
         self.label_selectset.setObjectName(u"label_selectset")
         self.label_selectset.setEnabled(True)
-        self.label_selectset.setGeometry(QRect(240, 410, 161, 16))
+        self.label_selectset.setGeometry(QRect(240, 430, 161, 16))
         self.label_selectset.setFont(font)
         self.label_selectset.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.dropdown_shuffle = QComboBox(home)
-        self.dropdown_shuffle.addItem("")
-        self.dropdown_shuffle.addItem("")
-        self.dropdown_shuffle.setObjectName(u"dropdown_shuffle")
-        self.dropdown_shuffle.setGeometry(QRect(250, 290, 141, 25))
-        self.dropdown_reverse = QComboBox(home)
-        self.dropdown_reverse.addItem("")
-        self.dropdown_reverse.addItem("")
-        self.dropdown_reverse.setObjectName(u"dropdown_reverse")
-        self.dropdown_reverse.setGeometry(QRect(250, 340, 141, 25))
         self.label_type = QLabel(home)
         self.label_type.setObjectName(u"label_type")
         self.label_type.setGeometry(QRect(250, 220, 141, 20))
-        self.label_shuffle = QLabel(home)
-        self.label_shuffle.setObjectName(u"label_shuffle")
-        self.label_shuffle.setGeometry(QRect(250, 270, 141, 20))
-        self.label_reverse = QLabel(home)
-        self.label_reverse.setObjectName(u"label_reverse")
-        self.label_reverse.setGeometry(QRect(250, 320, 151, 20))
+        self.groupBox = QGroupBox(home)
+        self.groupBox.setObjectName(u"groupBox")
+        self.groupBox.setGeometry(QRect(240, 270, 161, 81))
+        self.check_shuffle = QCheckBox(self.groupBox)
+        self.check_shuffle.setObjectName(u"check_shuffle")
+        self.check_shuffle.setGeometry(QRect(10, 25, 141, 21))
+        self.check_flip = QCheckBox(self.groupBox)
+        self.check_flip.setObjectName(u"check_flip")
+        self.check_flip.setGeometry(QRect(10, 52, 141, 21))
 
         self.retranslateUi(home)
 
@@ -92,14 +86,9 @@ class Ui_home(object):
         self.button_start.setText(QCoreApplication.translate("home", u"Start", None))
         self.button_import.setText(QCoreApplication.translate("home", u"Select Question Set", None))
         self.label_selectset.setText(QCoreApplication.translate("home", u"Please select a set.", None))
-        self.dropdown_shuffle.setItemText(0, QCoreApplication.translate("home", u"In order", None))
-        self.dropdown_shuffle.setItemText(1, QCoreApplication.translate("home", u"Shuffle", None))
-
-        self.dropdown_reverse.setItemText(0, QCoreApplication.translate("home", u"Normal", None))
-        self.dropdown_reverse.setItemText(1, QCoreApplication.translate("home", u"Reversed", None))
-
         self.label_type.setText(QCoreApplication.translate("home", u"Quiz Type", None))
-        self.label_shuffle.setText(QCoreApplication.translate("home", u"Question Order", None))
-        self.label_reverse.setText(QCoreApplication.translate("home", u"Flipped Question/Answer", None))
+        self.groupBox.setTitle(QCoreApplication.translate("home", u"Quiz Settings", None))
+        self.check_shuffle.setText(QCoreApplication.translate("home", u"Shuffle Card Order", None))
+        self.check_flip.setText(QCoreApplication.translate("home", u"Flipped Questions", None))
     # retranslateUi
 
